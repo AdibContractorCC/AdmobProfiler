@@ -1,26 +1,5 @@
 iOS DFP Banner Example
 ======================
-This is a minimal example showing how to place a DFP banner ad into an iOS
-application.
+A simple example built on top of Google's official DFPExample project. Dynamic loading of banner ad, with the button clearing it out and reloading the ad again.
 
-This example does not come bundled with the iOS Google Mobile Ads SDK, but is
-compatible with Cocoapods and includes a Podfile. We recommend using Cocoapods
-to reference the SDK. You can do this by running:
-
-`pod update`
-
-If you don't have Cocoapods installed, visit
-http://guides.cocoapods.org/using/getting-started.html#toc_3 to get started.
-
-After running pod update, Cocoapods creates a .xcworkspace that you can open
-and run.
-
-Replace the Ad Unit ID
-----------------------
-This example comes with a preconfigured DFP ad unit ID. You should create your
-own inventory in DFP and reference your own ad unit ID.
-
-Additional Resources
---------------------
-* [Developer documentation](https://developers.google.com/mobile-ads-sdk)
-* [Developer forum](groups.google.com/group/google-admob-ads-sdk)
+Run this in profiler to see leaks and allocations which hang around for the lifetime of the app.
