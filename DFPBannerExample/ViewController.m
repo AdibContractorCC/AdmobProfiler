@@ -5,7 +5,7 @@
 #import "DFPBannerView.h"
 #import "GADRequest.h"
 
-@interface ViewController ()
+@interface ViewController () <GADBannerViewDelegate>
 @property (nonatomic, strong) DFPBannerView *bannerView;
 @end
 
@@ -14,6 +14,7 @@
 
 - (void)loadBanner {
     self.bannerView = [[DFPBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    self.bannerView.delegate = self;
     self.bannerView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.bannerView];
     
@@ -30,6 +31,7 @@
 - (void)clearBanner {
     if (self.bannerView) {
         [self.bannerView removeFromSuperview];
+        self.bannerView.delegate = nil;
         self.bannerView = nil;
     }
 }
@@ -39,9 +41,29 @@
     self.bannerView = nil;
 }
 
-- (IBAction)buttonPush:(id)sender {
+- (void)clearAndLoadBanner {
     [self clearBanner];
     [self loadBanner];
+}
+
+- (IBAction)buttonPush:(id)sender {
+    [self clearAndLoadBanner];
+}
+
+- (IBAction)button100Push:(id)sender {
+    __weak __typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        NSUInteger times = 0;
+        while (times < 100) {
+            ++times;
+            
+            dispatch_sync(dispatch_get_main_queue(), ^(void) {
+                [weakSelf clearAndLoadBanner];
+            });
+            
+            [NSThread sleepForTimeInterval:1.0f];
+        }
+    });
 }
 
 - (void)didReceiveMemoryWarning {
